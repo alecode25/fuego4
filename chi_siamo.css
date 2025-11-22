@@ -1,0 +1,732 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 101;
+    transition: all 0.3s ease;
+}
+
+.logo img {
+    height: 80px;
+    width: auto;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    transition: color 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-links li a:hover {
+    color: rgb(126, 22, 22);
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Hero Section con fuego.png */
+.hero-about {
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(126, 22, 22, 0.4)),
+                url('fuego.png') center/cover no-repeat;
+    margin-top: 100px;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+}
+
+.hero-content h1 {
+    font-size: 5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, rgb(126, 22, 22), rgb(220, 60, 60));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 5px 20px rgba(126, 22, 22, 0.5);
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Chi Siamo Section */
+.chi-siamo-section {
+    position: relative;
+    background-color: #000;
+    padding: 120px 20px;
+    overflow: hidden;
+}
+
+.chi-siamo-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 50%, rgba(126, 22, 22, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(126, 22, 22, 0.1) 0%, transparent 50%);
+    z-index: 0;
+}
+
+.background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.chi-siamo-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header */
+.chi-siamo-header {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.small-title {
+    color: rgb(126, 22, 22);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.chi-siamo-header h2 {
+    font-size: 4rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, rgb(126, 22, 22), rgb(180, 40, 40), rgb(220, 60, 60));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900;
+}
+
+.title-underline {
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, rgb(126, 22, 22), transparent);
+    margin: 0 auto 25px;
+}
+
+.header-desc {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 300;
+    font-style: italic;
+}
+
+/* Grid Stories */
+.chi-siamo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 80px;
+}
+
+.story-box {
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(126, 22, 22, 0.3);
+    border-radius: 20px;
+    padding: 40px 30px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.story-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, rgb(126, 22, 22), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.story-box:hover::before {
+    transform: scaleX(1);
+}
+
+.story-box:hover {
+    border-color: rgb(126, 22, 22);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(126, 22, 22, 0.3);
+    background: rgba(30, 30, 30, 0.8);
+}
+
+.icon-wrapper {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, rgba(126, 22, 22, 0.2), rgba(126, 22, 22, 0.1));
+    border: 2px solid rgba(126, 22, 22, 0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+}
+
+.story-box:hover .icon-wrapper {
+    background: linear-gradient(135deg, rgb(126, 22, 22), rgb(180, 40, 40));
+    transform: scale(1.1) rotate(5deg);
+}
+
+.icon {
+    font-size: 2rem;
+}
+
+.story-content h3 {
+    font-size: 1.5rem;
+    color: rgb(126, 22, 22);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.story-content p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.story-content strong {
+    color: rgb(180, 40, 40);
+    font-weight: 700;
+}
+
+/* Stats Section */
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-bottom: 80px;
+    padding: 50px 0;
+    border-top: 2px solid rgba(126, 22, 22, 0.3);
+    border-bottom: 2px solid rgba(126, 22, 22, 0.3);
+}
+
+.stat-card {
+    text-align: center;
+    padding: 30px 20px;
+    background: rgba(126, 22, 22, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(126, 22, 22, 0.2);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    background: rgba(126, 22, 22, 0.15);
+    transform: translateY(-5px);
+    border-color: rgb(126, 22, 22);
+}
+
+.stat-number {
+    font-size: 3.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, rgb(126, 22, 22), rgb(220, 60, 60));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+    line-height: 1;
+}
+
+.stat-number::after {
+    content: '+';
+    font-size: 2rem;
+    margin-left: 5px;
+}
+
+.stat-label {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+/* Team Section */
+.team-section {
+    margin-bottom: 80px;
+}
+
+.team-section h2 {
+    font-size: 3rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, rgb(126, 22, 22), rgb(180, 40, 40));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.team-intro {
+    text-align: center;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 60px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.team-card {
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(126, 22, 22, 0.3);
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    transition: all 0.4s ease;
+}
+
+.team-card:hover {
+    border-color: rgb(126, 22, 22);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(126, 22, 22, 0.3);
+}
+
+.team-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 20px;
+    border: 3px solid rgba(126, 22, 22, 0.4);
+    transition: all 0.3s ease;
+}
+
+.team-card:hover .team-image {
+    border-color: rgb(126, 22, 22);
+    transform: scale(1.05);
+}
+
+.team-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.team-card h4 {
+    font-size: 1.3rem;
+    color: rgb(126, 22, 22);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.team-role {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 15px;
+}
+
+.team-social {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.team-social a {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.team-social a:hover {
+    transform: scale(1.2);
+}
+
+/* Motto Box */
+.motto-box {
+    background: linear-gradient(135deg, rgba(126, 22, 22, 0.15), rgba(20, 20, 20, 0.8));
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(126, 22, 22, 0.4);
+    border-radius: 25px;
+    padding: 60px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.motto-box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(126, 22, 22, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.motto-content {
+    position: relative;
+    z-index: 1;
+}
+
+.quote-icon {
+    font-size: 5rem;
+    color: rgba(126, 22, 22, 0.3);
+    font-family: Georgia, serif;
+    line-height: 0.8;
+    margin-bottom: 20px;
+}
+
+.motto-content h3 {
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 40px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+
+.highlight {
+    background: linear-gradient(135deg, rgb(126, 22, 22), rgb(220, 60, 60));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900;
+}
+
+/* Buttons */
+.motto-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 18px 45px;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-radius: 50px;
+    transition: all 0.4s ease;
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, rgb(126, 22, 22), rgb(180, 40, 40));
+    color: white;
+    border: 2px solid rgb(126, 22, 22);
+    box-shadow: 0 5px 20px rgba(126, 22, 22, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(126, 22, 22, 0.6);
+    background: linear-gradient(135deg, rgb(180, 40, 40), rgb(220, 60, 60));
+}
+
+.btn-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid rgb(126, 22, 22);
+}
+
+.btn-secondary:hover {
+    background: rgba(126, 22, 22, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(126, 22, 22, 0.3);
+}
+
+/* Footer */
+.footer {
+    background-color: #000;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 40px 50px;
+    margin-top: 0;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer-content p {
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+.social-icons {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    transform: translateY(-3px) scale(1.05);
+}
+
+.social-icons svg {
+    width: 40px;
+    height: 40px;
+}
+
+.social-icons img.tiktok-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+/* Mobile Responsive */
+@media (max-width: 968px) {
+    .navbar {
+        padding: 15px 20px;
+    }
+
+    .logo img {
+        height: 70px;
+    }
+
+    .hamburger {
+        display: flex;
+        z-index: 102;
+        position: relative;
+    }
+
+    .nav-links {
+        position: fixed;
+        right: -100%;
+        top: 100px;
+        flex-direction: column;
+        background-color: rgba(0, 0, 0, 0.95);
+        width: 100%;
+        text-align: center;
+        transition: right 0.3s ease;
+        padding: 30px 0;
+        gap: 0;
+        height: calc(100vh - 100px);
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .nav-links li {
+        padding: 20px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+    }
+
+    .chi-siamo-header h2 {
+        font-size: 2.8rem;
+    }
+
+    .chi-siamo-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .stats-section {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
+    .motto-content h3 {
+        font-size: 1.8rem;
+    }
+
+    .motto-buttons {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .chi-siamo-section {
+        padding: 80px 15px;
+    }
+
+    .hero-about {
+        height: 50vh;
+        min-height: 400px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .chi-siamo-header h2 {
+        font-size: 2.2rem;
+    }
+
+    .stats-section {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+    }
+
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .motto-box {
+        padding: 40px 25px;
+    }
+
+    .motto-content h3 {
+        font-size: 1.5rem;
+    }
+
+    .footer {
+        padding: 30px 20px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .social-icons svg,
+    .social-icons img.tiktok-icon {
+        width: 35px;
+        height: 35px;
+    }
+}

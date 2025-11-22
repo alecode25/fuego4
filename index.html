@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuego</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">
+                <img src="assets/logo.png" alt="Fuego Logo">
+            </a>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#eventi">Eventi</a></li>
+            <li><a href="#contest">Contest</a></li>
+            <li><a href="chi_siamo.html">Chi Siamo</a></li>
+            <li><a href="locali.html">Discoteche</a></li>
+            <li><a href="contattaci.html">Contatti</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <img src="assets/main.jpg" alt="Background" class="background-image">
+        <div class="content">
+            <h1 class="welcome-text">Benvenuto in Fuego</h1>
+            <p class="subtitle">Prenota subito per il prossimo evento</p>
+            <a href="prenota.html" class="cta-button">
+                <span>Prenota Ora</span>
+            </a>
+        </div>
+    </div>
+
+    <section class="video-section">
+        <div class="video-text">
+            <h2>Vivi l'Esperienza Fuego</h2>
+            <p>Immergiti nell'atmosfera unica delle nostre feste. Musica e un'energia che ti
+                conquisterà dal primo momento. Ogni serata è un'esperienza indimenticabile.</p>
+        </div>
+        <video>
+            <source src="assets/video.mp4" type="video/mp4">
+            Il tuo browser non supporta il video.
+        </video>
+    </section>
+
+    <section class="eventi-section" id="eventi">
+        <div class="eventi-header">
+            <h2>Prossimi Eventi</h2>
+            <p>Non perderti le serate più calde della riviera</p>
+        </div>
+
+        <div class="carousel-wrapper">
+            <button class="carousel-btn prev" id="prevBtn">
+                <span>‹</span>
+            </button>
+
+            <div class="eventi-carousel">
+                <div class="evento-card">
+                    <div class="evento-image">
+                        <img src="assets/prov.jpg" alt="Evento 1">
+                        <div class="evento-badge">Over 18</div>
+                    </div>
+                    <div class="evento-info">
+                        <h3>Reggaeton Night</h3>
+                        <p class="evento-data">Sabato 30 Novembre 2025</p>
+                        <p class="evento-locale">Blow Up - Riccione</p>
+                        <p class="evento-desc">La serata reggaeton più caliente della riviera</p>
+                        <a href="#" class="evento-btn">Prenota Ora</a>
+                    </div>
+                </div>
+
+                <div class="evento-card">
+                    <div class="evento-image">
+                        <img src="assets/prov2.jpg" alt="Evento 2">
+                        <div class="evento-badge">Over 16</div>
+                    </div>
+                    <div class="evento-info">
+                        <h3>Hip Hop Party</h3>
+                        <p class="evento-data">Venerdì 6 Dicembre 2025</p>
+                        <p class="evento-locale">Villa delle Rose - Rimini</p>
+                        <p class="evento-desc">Special guest DJ e atmosfera unica</p>
+                        <a href="#" class="evento-btn">Prenota Ora</a>
+                    </div>
+                </div>
+
+                <div class="evento-card">
+                    <div class="evento-image">
+                        <img src="assets/prov3.jpg" alt="Evento 3">
+                        <div class="evento-badge">Over 18</div>
+                    </div>
+                    <div class="evento-info">
+                        <h3>Latin Fiesta</h3>
+                        <p class="evento-data">Sabato 14 Dicembre 2025</p>
+                        <p class="evento-locale">Paradiso - Rimini</p>
+                        <p class="evento-desc">Noche latina con i migliori DJ della costa</p>
+                        <a href="#" class="evento-btn">Prenota Ora</a>
+                    </div>
+                </div>
+
+                <div class="evento-card">
+                    <div class="evento-image">
+                        <img src="assets/prov4.jpg" alt="Evento 4">
+                        <div class="evento-badge">Over 16</div>
+                    </div>
+                    <div class="evento-info">
+                        <h3>Commercial Night</h3>
+                        <p class="evento-data">Venerdì 20 Dicembre 2025</p>
+                        <p class="evento-locale">Carnaby - Rimini</p>
+                        <p class="evento-desc">I tormentoni che ami, la festa che ricordi</p>
+                        <a href="#" class="evento-btn">Prenota Ora</a>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-btn next" id="nextBtn">
+                <span>›</span>
+            </button>
+        </div>
+
+        <div class="carousel-dots" id="carouselDots"></div>
+    </section>
+    <section class="contest-section" id="contest">
+        <div class="contest-header">
+            <h2>Contest in Corso</h2>
+            <p>Partecipa ai nostri contest e vinci biglietti gratuiti e premi esclusivi</p>
+        </div>
+
+        <div class="contest-grid">
+            <!-- Contest Card 1 -->
+            <div class="contest-card">
+                <div class="contest-image">
+                    <img src="assets/contest1.png" alt="Contest 1">
+                    <div class="contest-status attivo">Prossimamente</div>
+                </div>
+                <div class="contest-content">
+                    <h3>Acquista la prevendita e vinci fantastici premi</h3>
+                    <p class="contest-scadenza">Scadenza: 30 Novembre 2025</p>
+                    <p class="contest-desc">Segui @fuego_official_events su Instagram, tagga 3 amici nel post e vinci 2
+                        ingressi VIP per la prossima serata!</p>
+                    <div class="contest-stats">
+                        <div class="stat">
+                            <span class="stat-number">120+</span>
+                            <span class="stat-label">Partecipanti</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">TANTISSIMI</span>
+                            <span class="stat-label">Premi</span>
+                        </div>
+                    </div>
+                    <a href="https://www.instagram.com/p/DQZ3EH8jUC8/" class="contest-btn">Partecipa Ora</a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    
+
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Fuego. Tutti i diritti riservati.</p>
+            <div class="social-icons">
+                <a href="https://instagram.com/fuego_official_events" target="_blank" aria-label="Instagram">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                        <defs>
+                            <radialGradient id="instagramGradient" cx="30%" cy="107%" r="150%">
+                                <stop offset="0%" style="stop-color:#FFD521" />
+                                <stop offset="5%" style="stop-color:#FFD521" />
+                                <stop offset="50%" style="stop-color:#F50000" />
+                                <stop offset="95%" style="stop-color:#B900B4" />
+                                <stop offset="100%" style="stop-color:#B900B4" />
+                            </radialGradient>
+                        </defs>
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                            fill="url(#instagramGradient)" />
+                    </svg>
+                </a>
+                <a href="https://www.tiktok.com/@staff_fuego_" target="_blank" aria-label="TikTok">
+                    <img src="assets/tiktok.png" alt="TikTok" class="tiktok-icon">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
