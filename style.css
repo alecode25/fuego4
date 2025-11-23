@@ -442,6 +442,7 @@ body {
     letter-spacing: 1px;
     transition: all 0.3s ease;
     align-self: flex-start;
+    margin-top: auto;
 }
 
 .evento-btn:hover {
@@ -876,9 +877,23 @@ body {
         font-size: 2rem;
     }
 
-    /* CARD MOBILE */
+    /* FIX CARD MOBILE - ALTEZZA AUTOMATICA */
     .evento-card {
         min-width: 85vw;
+        height: auto;
+        min-height: 480px;
+    }
+
+    .evento-image {
+        height: 250px;
+    }
+
+    .evento-info {
+        padding: 20px !important;
+    }
+
+    .evento-info h3 {
+        font-size: 1.5rem;
     }
 
     .carousel-btn {
