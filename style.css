@@ -880,9 +880,9 @@ body {
         font-size: 2rem;
     }
 
-    /* CARD MOBILE - PIÙ PICCOLA */
+    /* CARD MOBILE - NON TAGLIATA */
     .evento-card {
-        min-width: calc(100% - 30px);
+        min-width: calc(100% - 40px);
         height: auto;
         min-height: 480px;
         scroll-snap-align: center;
@@ -891,8 +891,8 @@ body {
 
     .eventi-carousel {
         gap: 15px;
-        padding: 20px 15px;
-        scroll-padding: 0 15px;
+        padding: 20px 20px;
+        scroll-padding: 0 20px;
     }
 
     .evento-image {
