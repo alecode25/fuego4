@@ -80,7 +80,7 @@ if (video) {
     });
 }
 
-// CAROUSEL - OTTIMIZZATO CON CENTRATURA PERFETTA
+// CAROUSEL - VERSIONE FINALE CON CENTRATURA PERFETTA
 const carousel = document.querySelector('.eventi-carousel');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
@@ -91,30 +91,20 @@ if (carousel && cards.length > 0) {
     let currentIndex = 0;
     let autoScrollInterval;
     const autoScrollDelay = 7000;
+    let isScrolling = false;
 
     function getCardsPerView() {
         return window.innerWidth <= 768 ? 1 : 2;
     }
 
     let cardsPerView = getCardsPerView();
-    let totalPages = Math.ceil(cards.length / cardsPerView);
-
-    // CENTRA LE CARD SU MOBILE
-    function centerCards() {
-        if (window.innerWidth <= 768) {
-            cards.forEach(card => {
-                const cardWidth = card.offsetWidth;
-                const viewportWidth = window.innerWidth;
-                const offset = (viewportWidth - cardWidth) / 2;
-                card.style.scrollSnapAlign = 'center';
-            });
-        }
-    }
+    let totalPages = cards.length; // Mobile: 1 card = 1 page
 
     // Crea i dots
     function createDots() {
         dotsContainer.innerHTML = '';
-        totalPages = Math.ceil(cards.length / cardsPerView);
+        totalPages = window.innerWidth <= 768 ? cards.length : Math.ceil(cards.length / 2);
+
         for (let i = 0; i < totalPages; i++) {
             const dot = document.createElement('div');
             dot.classList.add('dot');
@@ -132,53 +122,59 @@ if (carousel && cards.length > 0) {
         });
     }
 
-    // Vai a una pagina specifica CON CENTRATURA
-       // Vai a una pagina specifica CON CENTRATURA PERFETTA
+    // Vai a una card specifica - CENTRATURA MATEMATICA
     function goToPage(pageIndex) {
         if (pageIndex < 0 || pageIndex >= totalPages) return;
-        
+        if (isScrolling) return;
+
+        isScrolling = true;
         currentIndex = pageIndex;
-        
+
         if (window.innerWidth <= 768) {
-            // Mobile: centra ogni card perfettamente
+            // Mobile: centra la card selezionata
             const targetCard = cards[currentIndex];
-            const cardLeft = targetCard.offsetLeft;
+            const containerWidth = carousel.offsetWidth;
             const cardWidth = targetCard.offsetWidth;
-            const viewportWidth = carousel.offsetWidth;
-            
-            // Calcolo preciso per centrare e nascondere le altre card
-            const scrollPosition = cardLeft - (viewportWidth / 2) + (cardWidth / 2);
-            
+            const cardLeft = targetCard.offsetLeft;
+
+            // Formula: posizione card - metà container + metà card
+            const scrollPosition = cardLeft - (containerWidth / 2) + (cardWidth / 2);
+
             carousel.scrollTo({
-                left: scrollPosition,
+                left: Math.max(0, scrollPosition),
                 behavior: 'smooth'
             });
         } else {
             // Desktop: 2 card alla volta
             const cardWidth = cards[0].offsetWidth;
             const gap = 20;
-            const scrollAmount = (cardWidth + gap) * cardsPerView * currentIndex;
-            
+            const scrollAmount = (cardWidth + gap) * 2 * currentIndex;
+
             carousel.scrollTo({
                 left: scrollAmount,
                 behavior: 'smooth'
             });
         }
-        
-        updateDots();
+
+        setTimeout(() => {
+            isScrolling = false;
+            updateDots();
+        }, 500);
+
         resetAutoScroll();
     }
 
-
-    // Prossima pagina
+    // Prossima card
     function nextPage() {
-        currentIndex = (currentIndex + 1) % totalPages;
+        const maxIndex = window.innerWidth <= 768 ? cards.length - 1 : Math.ceil(cards.length / 2) - 1;
+        currentIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
         goToPage(currentIndex);
     }
 
-    // Pagina precedente
+    // Card precedente
     function prevPage() {
-        currentIndex = (currentIndex - 1 + totalPages) % totalPages;
+        const maxIndex = window.innerWidth <= 768 ? cards.length - 1 : Math.ceil(cards.length / 2) - 1;
+        currentIndex = currentIndex <= 0 ? maxIndex : currentIndex - 1;
         goToPage(currentIndex);
     }
 
@@ -196,7 +192,7 @@ if (carousel && cards.length > 0) {
     if (prevBtn) prevBtn.addEventListener('click', prevPage);
     if (nextBtn) nextBtn.addEventListener('click', nextPage);
 
-    // Touch events
+    // Touch: ferma autoscroll
     let touchStartTime;
     carousel.addEventListener('touchstart', () => {
         touchStartTime = Date.now();
@@ -206,74 +202,49 @@ if (carousel && cards.length > 0) {
     carousel.addEventListener('touchend', () => {
         const touchDuration = Date.now() - touchStartTime;
         setTimeout(() => {
-            resetAutoScroll();
-        }, touchDuration < 300 ? 200 : 500);
-    }, { passive: true });
-
-    // Scroll listener con snap intelligente
-    let scrollTimeout;
-    carousel.addEventListener('scroll', () => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
+            // Trova la card più vicina al centro dopo lo swipe
             if (window.innerWidth <= 768) {
-                // Mobile: trova la card più vicina al centro
-                const viewportCenter = carousel.scrollLeft + (carousel.offsetWidth / 2);
+                const containerCenter = carousel.scrollLeft + (carousel.offsetWidth / 2);
                 let closestIndex = 0;
-                let closestDistance = Infinity;
+                let minDistance = Infinity;
 
                 cards.forEach((card, index) => {
                     const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
-                    const distance = Math.abs(viewportCenter - cardCenter);
+                    const distance = Math.abs(containerCenter - cardCenter);
 
-                    if (distance < closestDistance) {
-                        closestDistance = distance;
+                    if (distance < minDistance) {
+                        minDistance = distance;
                         closestIndex = index;
                     }
                 });
 
-                if (closestIndex !== currentIndex) {
-                    currentIndex = closestIndex;
-                    updateDots();
-                }
-            } else {
-                // Desktop
-                const scrollLeft = carousel.scrollLeft;
-                const cardWidth = cards[0].offsetWidth;
-                const gap = 20;
-                const newIndex = Math.round(scrollLeft / ((cardWidth + gap) * 2));
-
-                if (newIndex !== currentIndex && newIndex < totalPages && newIndex >= 0) {
-                    currentIndex = newIndex;
-                    updateDots();
-                }
+                currentIndex = closestIndex;
+                goToPage(currentIndex);
             }
-        }, 150);
+            resetAutoScroll();
+        }, 100);
     }, { passive: true });
 
     // Inizializza
-    centerCards();
     createDots();
     goToPage(0);
     startAutoScroll();
 
-    // Ricalcola al resize
+    // Resize
     let resizeTimer;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
             clearInterval(autoScrollInterval);
             const newCardsPerView = getCardsPerView();
+
             if (newCardsPerView !== cardsPerView) {
                 cardsPerView = newCardsPerView;
-                totalPages = Math.ceil(cards.length / cardsPerView);
-                centerCards();
                 createDots();
                 currentIndex = 0;
                 goToPage(0);
-            } else {
-                centerCards();
-                goToPage(currentIndex);
             }
         }, 250);
     }, { passive: true });
 }
+
