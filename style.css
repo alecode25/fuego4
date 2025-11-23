@@ -334,6 +334,8 @@ body {
     -webkit-overflow-scrolling: touch;
     padding: 20px 0;
     touch-action: pan-x;
+    max-width: 100vw;
+    box-sizing: border-box;
 }
 
 /* Nascondi scrollbar del carousel */
