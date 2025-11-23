@@ -79,7 +79,8 @@ if (video) {
         video.muted = !video.muted;
     });
 }
-// CAROUSEL - OTTIMIZZATO PER 1 CARD ALLA VOLTA
+
+// CAROUSEL - OTTIMIZZATO CON CENTRATURA PERFETTA
 const carousel = document.querySelector('.eventi-carousel');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
@@ -95,12 +96,20 @@ if (carousel && cards.length > 0) {
         return window.innerWidth <= 768 ? 1 : 2;
     }
 
-    function getGap() {
-        return window.innerWidth <= 768 ? 15 : 20;  /* Gap corretto */
-    }
-
     let cardsPerView = getCardsPerView();
     let totalPages = Math.ceil(cards.length / cardsPerView);
+
+    // CENTRA LE CARD SU MOBILE
+    function centerCards() {
+        if (window.innerWidth <= 768) {
+            cards.forEach(card => {
+                const cardWidth = card.offsetWidth;
+                const viewportWidth = window.innerWidth;
+                const offset = (viewportWidth - cardWidth) / 2;
+                card.style.scrollSnapAlign = 'center';
+            });
+        }
+    }
 
     // Crea i dots
     function createDots() {
@@ -123,19 +132,36 @@ if (carousel && cards.length > 0) {
         });
     }
 
-    // Vai a una pagina specifica
+    // Vai a una pagina specifica CON CENTRATURA
     function goToPage(pageIndex) {
         if (pageIndex < 0 || pageIndex >= totalPages) return;
 
         currentIndex = pageIndex;
-        const cardWidth = cards[0].offsetWidth;
-        const gap = getGap();
-        const scrollAmount = (cardWidth + gap) * cardsPerView * currentIndex;
 
-        carousel.scrollTo({
-            left: scrollAmount,
-            behavior: 'smooth'
-        });
+        if (window.innerWidth <= 768) {
+            // Mobile: centra ogni card
+            const targetCard = cards[currentIndex];
+            const cardLeft = targetCard.offsetLeft;
+            const cardWidth = targetCard.offsetWidth;
+            const viewportWidth = carousel.offsetWidth;
+            const scrollPosition = cardLeft - (viewportWidth / 2) + (cardWidth / 2);
+
+            carousel.scrollTo({
+                left: scrollPosition,
+                behavior: 'smooth'
+            });
+        } else {
+            // Desktop: 2 card alla volta
+            const cardWidth = cards[0].offsetWidth;
+            const gap = 20;
+            const scrollAmount = (cardWidth + gap) * cardsPerView * currentIndex;
+
+            carousel.scrollTo({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+
         updateDots();
         resetAutoScroll();
     }
@@ -166,7 +192,7 @@ if (carousel && cards.length > 0) {
     if (prevBtn) prevBtn.addEventListener('click', prevPage);
     if (nextBtn) nextBtn.addEventListener('click', nextPage);
 
-    // Touch events - SOLO per autoscroll
+    // Touch events
     let touchStartTime;
     carousel.addEventListener('touchstart', () => {
         touchStartTime = Date.now();
@@ -180,36 +206,50 @@ if (carousel && cards.length > 0) {
         }, touchDuration < 300 ? 200 : 500);
     }, { passive: true });
 
-    // Aggiorna dots basandoti sullo scroll
+    // Scroll listener con snap intelligente
     let scrollTimeout;
     carousel.addEventListener('scroll', () => {
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
-            const scrollLeft = carousel.scrollLeft;
-            const cardWidth = cards[0].offsetWidth;
-            const gap = getGap();
-            const cardWidthWithGap = cardWidth + gap;
-
-            let newIndex;
             if (window.innerWidth <= 768) {
-                // Mobile: 1 card alla volta
-                newIndex = Math.round(scrollLeft / cardWidthWithGap);
+                // Mobile: trova la card più vicina al centro
+                const viewportCenter = carousel.scrollLeft + (carousel.offsetWidth / 2);
+                let closestIndex = 0;
+                let closestDistance = Infinity;
+
+                cards.forEach((card, index) => {
+                    const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+                    const distance = Math.abs(viewportCenter - cardCenter);
+
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestIndex = index;
+                    }
+                });
+
+                if (closestIndex !== currentIndex) {
+                    currentIndex = closestIndex;
+                    updateDots();
+                }
             } else {
-                // Desktop: 2 card alla volta
-                newIndex = Math.round(scrollLeft / (cardWidthWithGap * 2));
-            }
+                // Desktop
+                const scrollLeft = carousel.scrollLeft;
+                const cardWidth = cards[0].offsetWidth;
+                const gap = 20;
+                const newIndex = Math.round(scrollLeft / ((cardWidth + gap) * 2));
 
-            newIndex = Math.max(0, Math.min(newIndex, totalPages - 1));
-
-            if (newIndex !== currentIndex) {
-                currentIndex = newIndex;
-                updateDots();
+                if (newIndex !== currentIndex && newIndex < totalPages && newIndex >= 0) {
+                    currentIndex = newIndex;
+                    updateDots();
+                }
             }
         }, 150);
     }, { passive: true });
 
     // Inizializza
+    centerCards();
     createDots();
+    goToPage(0);
     startAutoScroll();
 
     // Ricalcola al resize
@@ -222,11 +262,13 @@ if (carousel && cards.length > 0) {
             if (newCardsPerView !== cardsPerView) {
                 cardsPerView = newCardsPerView;
                 totalPages = Math.ceil(cards.length / cardsPerView);
+                centerCards();
                 createDots();
                 currentIndex = 0;
-                carousel.scrollLeft = 0;
-                updateDots();
-                startAutoScroll();
+                goToPage(0);
+            } else {
+                centerCards();
+                goToPage(currentIndex);
             }
         }, 250);
     }, { passive: true });

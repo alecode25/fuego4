@@ -882,7 +882,8 @@ body {
 
     /* TUTTE LE CARD */
     .evento-card {
-        min-width: calc(100% - 20px);
+        min-width: 85vw;
+        max-width: 85vw;
         height: auto;
         min-height: 480px;
         scroll-snap-align: center;
@@ -896,9 +897,9 @@ body {
     }
 
     .eventi-carousel {
-        gap: 15px;
-        padding: 20px 10px;
-        scroll-padding: 0 10px;
+        gap: 20px;
+        padding: 20px 0;
+        scroll-padding: 0;
     }
 
     .evento-image {
