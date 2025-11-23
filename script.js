@@ -54,7 +54,7 @@ const videoObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             const playPromise = video.play();
-            
+
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
                     console.log('Autoplay bloccato:', error);
@@ -79,8 +79,7 @@ if (video) {
         video.muted = !video.muted;
     });
 }
-
-// CAROUSEL - SOLO SCROLL NATIVO (NO JAVASCRIPT)
+// CAROUSEL - OTTIMIZZATO PER 1 CARD ALLA VOLTA
 const carousel = document.querySelector('.eventi-carousel');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
@@ -94,6 +93,10 @@ if (carousel && cards.length > 0) {
 
     function getCardsPerView() {
         return window.innerWidth <= 768 ? 1 : 2;
+    }
+
+    function getGap() {
+        return window.innerWidth <= 768 ? 15 : 20;  /* Gap corretto */
     }
 
     let cardsPerView = getCardsPerView();
@@ -123,12 +126,12 @@ if (carousel && cards.length > 0) {
     // Vai a una pagina specifica
     function goToPage(pageIndex) {
         if (pageIndex < 0 || pageIndex >= totalPages) return;
-        
+
         currentIndex = pageIndex;
         const cardWidth = cards[0].offsetWidth;
-        const gap = 30;
+        const gap = getGap();
         const scrollAmount = (cardWidth + gap) * cardsPerView * currentIndex;
-        
+
         carousel.scrollTo({
             left: scrollAmount,
             behavior: 'smooth'
@@ -163,7 +166,7 @@ if (carousel && cards.length > 0) {
     if (prevBtn) prevBtn.addEventListener('click', prevPage);
     if (nextBtn) nextBtn.addEventListener('click', nextPage);
 
-    // SOLO fermare autoscroll quando tocchi - NESSUN ALTRO TOUCH LISTENER
+    // Touch events - SOLO per autoscroll
     let touchStartTime;
     carousel.addEventListener('touchstart', () => {
         touchStartTime = Date.now();
@@ -172,44 +175,36 @@ if (carousel && cards.length > 0) {
 
     carousel.addEventListener('touchend', () => {
         const touchDuration = Date.now() - touchStartTime;
-        // Riavvia autoscroll dopo un breve delay
         setTimeout(() => {
             resetAutoScroll();
         }, touchDuration < 300 ? 200 : 500);
     }, { passive: true });
 
-    // Aggiorna dots basandoti sullo scroll nativo con debounce ottimizzato
+    // Aggiorna dots basandoti sullo scroll
     let scrollTimeout;
-    let isScrolling = false;
-    
     carousel.addEventListener('scroll', () => {
-        if (!isScrolling) {
-            isScrolling = true;
-        }
-        
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
             const scrollLeft = carousel.scrollLeft;
             const cardWidth = cards[0].offsetWidth;
-            const gap = 30;
+            const gap = getGap();
             const cardWidthWithGap = cardWidth + gap;
-            
-            // Calcolo più preciso dell'indice
+
             let newIndex;
             if (window.innerWidth <= 768) {
+                // Mobile: 1 card alla volta
                 newIndex = Math.round(scrollLeft / cardWidthWithGap);
             } else {
+                // Desktop: 2 card alla volta
                 newIndex = Math.round(scrollLeft / (cardWidthWithGap * 2));
             }
-            
+
             newIndex = Math.max(0, Math.min(newIndex, totalPages - 1));
-            
+
             if (newIndex !== currentIndex) {
                 currentIndex = newIndex;
                 updateDots();
             }
-            
-            isScrolling = false;
         }, 150);
     }, { passive: true });
 

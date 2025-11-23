@@ -310,14 +310,14 @@ body {
     margin: 0 auto;
 }
 
-/* Carousel Container - FIX SCROLL MOBILE */
+/* Carousel Container - OTTIMIZZATO */
 .eventi-carousel {
     display: flex;
-    gap: 30px;
+    gap: 20px;
     overflow-x: auto;
     overflow-y: visible;
     -webkit-overflow-scrolling: touch;
-    padding: 20px 0;
+    padding: 20px 10px;
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
 }
@@ -334,7 +334,7 @@ body {
 
 /* Event Card */
 .evento-card {
-    min-width: calc(50% - 15px);
+    min-width: calc(50% - 10px);
     background: #000;
     border-radius: 20px;
     overflow: hidden;
@@ -344,6 +344,7 @@ body {
     display: flex;
     flex-direction: column;
     scroll-snap-align: start;
+    scroll-snap-stop: always;
 }
 
 .evento-card:hover {
@@ -880,12 +881,19 @@ body {
         font-size: 2rem;
     }
 
-    /* FIX CARD MOBILE - ALTEZZA AUTOMATICA */
+    /* CARD MOBILE - 1 ALLA VOLTA */
     .evento-card {
-        min-width: 85vw;
+        min-width: calc(100% - 20px);
         height: auto;
         min-height: 480px;
         scroll-snap-align: center;
+        scroll-snap-stop: always;
+    }
+
+    .eventi-carousel {
+        gap: 15px;
+        padding: 20px 10px;
+        scroll-padding: 0 10px;
     }
 
     .evento-image {
