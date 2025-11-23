@@ -37,11 +37,9 @@ window.addEventListener('scroll', () => {
     }
 
     if (currentScroll > lastScroll && !navbar.classList.contains('scroll-down')) {
-        // Scroll giù - nascondi navbar
         navbar.classList.remove('scroll-up');
         navbar.classList.add('scroll-down');
     } else if (currentScroll < lastScroll && navbar.classList.contains('scroll-down')) {
-        // Scroll su - mostra navbar
         navbar.classList.remove('scroll-down');
         navbar.classList.add('scroll-up');
     }
@@ -49,7 +47,7 @@ window.addEventListener('scroll', () => {
     lastScroll = currentScroll;
 }, { passive: true });
 
-// Auto-play video quando entra in viewport - FIX MOBILE
+// Auto-play video quando entra in viewport
 const observerOptions = {
     threshold: 0.5
 };
@@ -57,12 +55,10 @@ const observerOptions = {
 const videoObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            // Tenta il play con gestione errori per mobile
             const playPromise = video.play();
             
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
-                    // Se l'autoplay viene bloccato dal browser
                     console.log('Autoplay bloccato dal browser:', error);
                 });
             }
@@ -75,17 +71,19 @@ const videoObserver = new IntersectionObserver((entries) => {
 if (video) {
     videoObserver.observe(video);
 
-    // Play/Pause al click sul video
+    // Click per attivare/disattivare audio
     video.addEventListener('click', () => {
         if (video.paused) {
             video.play();
         } else {
             video.pause();
         }
+        // Toggle mute per attivare audio
+        video.muted = !video.muted;
     });
 }
 
-// Carousel Eventi - VERSIONE OTTIMIZZATA SENZA LAG
+// CAROUSEL OTTIMIZZATO CON SCROLL SNAP
 const carousel = document.querySelector('.eventi-carousel');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
@@ -96,7 +94,14 @@ if (carousel && cards.length > 0) {
     let currentIndex = 0;
     let autoScrollInterval;
     const autoScrollDelay = 7000;
-    let cardsPerView = window.innerWidth > 768 ? 2 : 1;
+    const isMobile = window.innerWidth <= 768;
+
+    // Calcola quante card per view
+    function getCardsPerView() {
+        return window.innerWidth <= 768 ? 1 : 2;
+    }
+
+    let cardsPerView = getCardsPerView();
     let totalPages = Math.ceil(cards.length / cardsPerView);
 
     // Crea i dots
@@ -126,6 +131,7 @@ if (carousel && cards.length > 0) {
         const cardWidth = cards[0].offsetWidth;
         const gap = 30;
         const scrollAmount = (cardWidth + gap) * cardsPerView * currentIndex;
+        
         carousel.scrollTo({
             left: scrollAmount,
             behavior: 'smooth'
@@ -156,20 +162,22 @@ if (carousel && cards.length > 0) {
         startAutoScroll();
     }
 
-    // Event Listeners con passive per performance
+    // Event Listeners
     if (prevBtn) prevBtn.addEventListener('click', prevPage);
     if (nextBtn) nextBtn.addEventListener('click', nextPage);
 
-    // Touch events SOLO per fermare autoscroll - USA SCROLL NATIVO
+    // Touch per fermare autoscroll
     carousel.addEventListener('touchstart', () => {
         clearInterval(autoScrollInterval);
     }, { passive: true });
 
     carousel.addEventListener('touchend', () => {
-        resetAutoScroll();
+        setTimeout(() => {
+            resetAutoScroll();
+        }, 300);
     }, { passive: true });
 
-    // Scroll naturale listener per aggiornare i dots
+    // Scroll listener per aggiornare dots in base allo scroll nativo
     let scrollTimeout;
     carousel.addEventListener('scroll', () => {
         clearTimeout(scrollTimeout);
@@ -177,12 +185,13 @@ if (carousel && cards.length > 0) {
             const scrollLeft = carousel.scrollLeft;
             const cardWidth = cards[0].offsetWidth;
             const gap = 30;
-            const newIndex = Math.round(scrollLeft / ((cardWidth + gap) * cardsPerView));
+            const newIndex = Math.round(scrollLeft / (cardWidth + gap));
+            
             if (newIndex !== currentIndex && newIndex < totalPages && newIndex >= 0) {
                 currentIndex = newIndex;
                 updateDots();
             }
-        }, 150);
+        }, 100);
     }, { passive: true });
 
     // Inizializza
@@ -195,7 +204,7 @@ if (carousel && cards.length > 0) {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
             clearInterval(autoScrollInterval);
-            const newCardsPerView = window.innerWidth > 768 ? 2 : 1;
+            const newCardsPerView = getCardsPerView();
             if (newCardsPerView !== cardsPerView) {
                 cardsPerView = newCardsPerView;
                 createDots();

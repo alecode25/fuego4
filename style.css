@@ -316,6 +316,8 @@ body {
     gap: 30px;
     overflow-x: scroll;
     overflow-y: visible;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     padding: 20px 0;
 }
@@ -882,6 +884,7 @@ body {
         min-width: 85vw;
         height: auto;
         min-height: 480px;
+        scroll-snap-align: center;
     }
 
     .evento-image {
