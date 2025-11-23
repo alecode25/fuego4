@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
+
 }
 
 
@@ -330,14 +330,16 @@ body {
 .eventi-carousel {
     display: flex;
     gap: 30px;
-    overflow-x: auto;
+    overflow-x: scroll;
     overflow-y: visible;
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     padding: 20px 0;
-    touch-action: pan-y;  /* CRITICO: permette scroll verticale */
+    touch-action: manipulation;
+    /* CRITICO: permette pan-x E pan-y */
 }
+
 /* Nascondi scrollbar del carousel */
 .eventi-carousel::-webkit-scrollbar {
     display: none;
@@ -364,7 +366,7 @@ body {
     display: flex;
     flex-direction: column;
     scroll-snap-align: start;
-    scroll-snap-stop: always;  /* FORZA 1 CARD ALLA VOLTA */
+    scroll-snap-stop: always;
 }
 
 .evento-card:hover {
@@ -491,15 +493,15 @@ body {
 }
 
 @media (max-width: 768px) {
-   .evento-card {
+    .evento-card {
         min-width: calc(100% - 40px);
         scroll-snap-align: center;
         scroll-snap-stop: always;
     }
-    
+
     .eventi-carousel {
         padding: 20px 10px;
-        touch-action: pan-y;  /* Permette solo scroll verticale */
+        scroll-padding: 0 20px;
     }
 }
 
@@ -511,7 +513,6 @@ body {
     gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    overflow: visible;  /* Non bloccare lo scroll verticale */
 }
 
 
