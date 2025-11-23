@@ -45,7 +45,7 @@ window.addEventListener('scroll', () => {
     lastScroll = currentScroll;
 }, { passive: true });
 
-// Auto-play video quando entra in viewport
+// Auto-play video CON AUDIO quando entra in viewport
 const observerOptions = {
     threshold: 0.5
 };
@@ -53,11 +53,16 @@ const observerOptions = {
 const videoObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
+            // Prova a far partire il video con audio
+            video.muted = false;
             const playPromise = video.play();
-
+            
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
-                    console.log('Autoplay bloccato:', error);
+                    // Se il browser blocca l'autoplay con audio, parte muto
+                    console.log('Autoplay con audio bloccato, prova muto:', error);
+                    video.muted = true;
+                    video.play();
                 });
             }
         } else {
@@ -69,13 +74,14 @@ const videoObserver = new IntersectionObserver((entries) => {
 if (video) {
     videoObserver.observe(video);
 
-    // Click per attivare audio
+    // Click per play/pause e toggle mute
     video.addEventListener('click', () => {
         if (video.paused) {
             video.play();
         } else {
             video.pause();
         }
+        // Toggle audio
         video.muted = !video.muted;
     });
 }
