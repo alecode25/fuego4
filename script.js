@@ -22,13 +22,11 @@ document.querySelectorAll('.nav-links li a').forEach(link => {
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
 
-    // Chiudi il menu hamburger quando scrolli
     if (hamburger.classList.contains('active')) {
         hamburger.classList.remove('active');
         navLinks.classList.remove('active');
     }
 
-    // Rimuovi tutte le classi se sei in cima
     if (currentScroll <= 50) {
         navbar.classList.remove('scroll-up');
         navbar.classList.remove('scroll-down');
@@ -59,7 +57,7 @@ const videoObserver = new IntersectionObserver((entries) => {
             
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
-                    console.log('Autoplay bloccato dal browser:', error);
+                    console.log('Autoplay bloccato:', error);
                 });
             }
         } else {
@@ -71,19 +69,18 @@ const videoObserver = new IntersectionObserver((entries) => {
 if (video) {
     videoObserver.observe(video);
 
-    // Click per attivare/disattivare audio
+    // Click per attivare audio
     video.addEventListener('click', () => {
         if (video.paused) {
             video.play();
         } else {
             video.pause();
         }
-        // Toggle mute per attivare audio
         video.muted = !video.muted;
     });
 }
 
-// CAROUSEL OTTIMIZZATO CON SCROLL SNAP
+// CAROUSEL - SOLO SCROLL NATIVO (NO JAVASCRIPT)
 const carousel = document.querySelector('.eventi-carousel');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
@@ -94,9 +91,7 @@ if (carousel && cards.length > 0) {
     let currentIndex = 0;
     let autoScrollInterval;
     const autoScrollDelay = 7000;
-    const isMobile = window.innerWidth <= 768;
 
-    // Calcola quante card per view
     function getCardsPerView() {
         return window.innerWidth <= 768 ? 1 : 2;
     }
@@ -127,6 +122,8 @@ if (carousel && cards.length > 0) {
 
     // Vai a una pagina specifica
     function goToPage(pageIndex) {
+        if (pageIndex < 0 || pageIndex >= totalPages) return;
+        
         currentIndex = pageIndex;
         const cardWidth = cards[0].offsetWidth;
         const gap = 30;
@@ -162,36 +159,58 @@ if (carousel && cards.length > 0) {
         startAutoScroll();
     }
 
-    // Event Listeners
+    // Bottoni carousel
     if (prevBtn) prevBtn.addEventListener('click', prevPage);
     if (nextBtn) nextBtn.addEventListener('click', nextPage);
 
-    // Touch per fermare autoscroll
+    // SOLO fermare autoscroll quando tocchi - NESSUN ALTRO TOUCH LISTENER
+    let touchStartTime;
     carousel.addEventListener('touchstart', () => {
+        touchStartTime = Date.now();
         clearInterval(autoScrollInterval);
     }, { passive: true });
 
     carousel.addEventListener('touchend', () => {
+        const touchDuration = Date.now() - touchStartTime;
+        // Riavvia autoscroll dopo un breve delay
         setTimeout(() => {
             resetAutoScroll();
-        }, 300);
+        }, touchDuration < 300 ? 200 : 500);
     }, { passive: true });
 
-    // Scroll listener per aggiornare dots in base allo scroll nativo
+    // Aggiorna dots basandoti sullo scroll nativo con debounce ottimizzato
     let scrollTimeout;
+    let isScrolling = false;
+    
     carousel.addEventListener('scroll', () => {
+        if (!isScrolling) {
+            isScrolling = true;
+        }
+        
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
             const scrollLeft = carousel.scrollLeft;
             const cardWidth = cards[0].offsetWidth;
             const gap = 30;
-            const newIndex = Math.round(scrollLeft / (cardWidth + gap));
+            const cardWidthWithGap = cardWidth + gap;
             
-            if (newIndex !== currentIndex && newIndex < totalPages && newIndex >= 0) {
+            // Calcolo più preciso dell'indice
+            let newIndex;
+            if (window.innerWidth <= 768) {
+                newIndex = Math.round(scrollLeft / cardWidthWithGap);
+            } else {
+                newIndex = Math.round(scrollLeft / (cardWidthWithGap * 2));
+            }
+            
+            newIndex = Math.max(0, Math.min(newIndex, totalPages - 1));
+            
+            if (newIndex !== currentIndex) {
                 currentIndex = newIndex;
                 updateDots();
             }
-        }, 100);
+            
+            isScrolling = false;
+        }, 150);
     }, { passive: true });
 
     // Inizializza
@@ -207,9 +226,12 @@ if (carousel && cards.length > 0) {
             const newCardsPerView = getCardsPerView();
             if (newCardsPerView !== cardsPerView) {
                 cardsPerView = newCardsPerView;
+                totalPages = Math.ceil(cards.length / cardsPerView);
                 createDots();
                 currentIndex = 0;
-                goToPage(0);
+                carousel.scrollLeft = 0;
+                updateDots();
+                startAutoScroll();
             }
         }, 250);
     }, { passive: true });

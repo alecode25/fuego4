@@ -314,12 +314,12 @@ body {
 .eventi-carousel {
     display: flex;
     gap: 30px;
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: visible;
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     padding: 20px 0;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
 }
 
 /* Nascondi scrollbar del carousel */
@@ -343,6 +343,7 @@ body {
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
+    scroll-snap-align: start;
 }
 
 .evento-card:hover {
