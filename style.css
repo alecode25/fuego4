@@ -880,19 +880,25 @@ body {
         font-size: 2rem;
     }
 
-    /* CARD MOBILE - NON TAGLIATA */
+    /* TUTTE LE CARD */
     .evento-card {
-        min-width: calc(100% - 40px);
+        min-width: calc(100% - 20px);
         height: auto;
         min-height: 480px;
         scroll-snap-align: center;
         scroll-snap-stop: always;
     }
 
+    /* SOLO PRIMA CARD - PIÙ PICCOLA */
+    .evento-card:first-child {
+        min-width: calc(100% - 50px);
+        margin-left: 15px;
+    }
+
     .eventi-carousel {
         gap: 15px;
-        padding: 20px 20px;
-        scroll-padding: 0 20px;
+        padding: 20px 10px;
+        scroll-padding: 0 10px;
     }
 
     .evento-image {
