@@ -331,16 +331,13 @@ body {
     display: flex;
     gap: 30px;
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: visible;
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     padding: 20px 0;
-    touch-action: pan-x;
-    max-width: 100vw;
-    box-sizing: border-box;
+    touch-action: pan-y;  /* CRITICO: permette scroll verticale */
 }
-
 /* Nascondi scrollbar del carousel */
 .eventi-carousel::-webkit-scrollbar {
     display: none;
@@ -367,7 +364,7 @@ body {
     display: flex;
     flex-direction: column;
     scroll-snap-align: start;
-    scroll-snap-stop: normal;
+    scroll-snap-stop: always;  /* FORZA 1 CARD ALLA VOLTA */
 }
 
 .evento-card:hover {
@@ -494,15 +491,29 @@ body {
 }
 
 @media (max-width: 768px) {
-    .evento-card {
-        min-width: calc(100vw - 40px);
+   .evento-card {
+        min-width: calc(100% - 40px);
         scroll-snap-align: center;
+        scroll-snap-stop: always;
     }
-
+    
     .eventi-carousel {
         padding: 20px 10px;
+        touch-action: pan-y;  /* Permette solo scroll verticale */
     }
 }
+
+/* Wrapper - permetti scroll verticale */
+.carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: visible;  /* Non bloccare lo scroll verticale */
+}
+
 
 .carousel-btn span {
     font-size: 2rem;
