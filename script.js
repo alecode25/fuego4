@@ -47,22 +47,28 @@ window.addEventListener('scroll', () => {
 
 // Auto-play video CON AUDIO quando entra in viewport
 const observerOptions = {
-    threshold: 0.5
+    threshold: 0.3
 };
 
 const videoObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            // Prova a far partire il video con audio
+            // Prova prima CON audio
             video.muted = false;
             const playPromise = video.play();
             
             if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    // Se il browser blocca l'autoplay con audio, parte muto
-                    console.log('Autoplay con audio bloccato, prova muto:', error);
+                playPromise.then(() => {
+                    console.log('✅ Video avviato con audio!');
+                }).catch(error => {
+                    // Fallback: prova SENZA audio
+                    console.log('⚠️ Audio bloccato, provo muto');
                     video.muted = true;
-                    video.play();
+                    video.play().then(() => {
+                        console.log('✅ Video avviato muto');
+                    }).catch(e => {
+                        console.log('❌ Errore video:', e);
+                    });
                 });
             }
         } else {
@@ -74,17 +80,25 @@ const videoObserver = new IntersectionObserver((entries) => {
 if (video) {
     videoObserver.observe(video);
 
-    // Click per play/pause e toggle mute
+    // Singolo click = attiva/disattiva audio E riavvia se è in pausa
     video.addEventListener('click', () => {
+        // Se il video è in pausa, fallo ripartire
         if (video.paused) {
+            video.muted = false;
             video.play();
+            console.log('▶️ Video avviato con audio');
         } else {
-            video.pause();
+            // Toggle audio
+            video.muted = !video.muted;
+            if (video.muted) {
+                console.log('🔇 Audio disattivato');
+            } else {
+                console.log('🔊 Audio attivato');
+            }
         }
-        // Toggle audio
-        video.muted = !video.muted;
     });
 }
+
 
 // CAROUSEL - CON LOOP INFINITO SEAMLESS
 const carousel = document.querySelector('.eventi-carousel');
