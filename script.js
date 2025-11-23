@@ -133,19 +133,22 @@ if (carousel && cards.length > 0) {
     }
 
     // Vai a una pagina specifica CON CENTRATURA
+       // Vai a una pagina specifica CON CENTRATURA PERFETTA
     function goToPage(pageIndex) {
         if (pageIndex < 0 || pageIndex >= totalPages) return;
-
+        
         currentIndex = pageIndex;
-
+        
         if (window.innerWidth <= 768) {
-            // Mobile: centra ogni card
+            // Mobile: centra ogni card perfettamente
             const targetCard = cards[currentIndex];
             const cardLeft = targetCard.offsetLeft;
             const cardWidth = targetCard.offsetWidth;
             const viewportWidth = carousel.offsetWidth;
+            
+            // Calcolo preciso per centrare e nascondere le altre card
             const scrollPosition = cardLeft - (viewportWidth / 2) + (cardWidth / 2);
-
+            
             carousel.scrollTo({
                 left: scrollPosition,
                 behavior: 'smooth'
@@ -155,16 +158,17 @@ if (carousel && cards.length > 0) {
             const cardWidth = cards[0].offsetWidth;
             const gap = 20;
             const scrollAmount = (cardWidth + gap) * cardsPerView * currentIndex;
-
+            
             carousel.scrollTo({
                 left: scrollAmount,
                 behavior: 'smooth'
             });
         }
-
+        
         updateDots();
         resetAutoScroll();
     }
+
 
     // Prossima pagina
     function nextPage() {

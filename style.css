@@ -880,24 +880,18 @@ body {
         font-size: 2rem;
     }
 
-    /* TUTTE LE CARD */
+    /* CARD MOBILE - PERFETTE E CENTRATE */
     .evento-card {
-        min-width: 85vw;
-        max-width: 85vw;
+        min-width: 90vw;
+        max-width: 90vw;
         height: auto;
         min-height: 480px;
         scroll-snap-align: center;
         scroll-snap-stop: always;
     }
 
-    /* SOLO PRIMA CARD - PIÙ PICCOLA */
-    .evento-card:first-child {
-        min-width: calc(100% - 50px);
-        margin-left: 15px;
-    }
-
     .eventi-carousel {
-        gap: 20px;
+        gap: 30px;
         padding: 20px 0;
         scroll-padding: 0;
     }
