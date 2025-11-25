@@ -29,34 +29,35 @@
             <li><a href="chi_siamo.html">Chi Siamo</a></li>
             <li><a href="index.html#faq">Domande Frequenti</a></li>
             <li><a href="index.html#NewsletterForm">Iscriviti alla Newsletter</a></li>
-            
+
         </ul>
     </nav>
-<!-- COUNTDOWN FISSO IN BASSO -->
+    <!-- COUNTDOWN FISSO IN BASSO -->
     <div class="countdown-fixed" id="countdownBar">
-        <div class="countdown-fixed-content">
-            <div class="countdown-fixed-title">🔥 Prossimo Evento</div>
-            <div class="countdown-fixed-timer">
-                <div class="time-box-fixed">
-                    <div class="time-value-fixed" id="days">00</div>
-                    <div class="time-label-fixed">Giorni</div>
+        <div class="countdown-content">
+            <span class="countdown-text">Prossimo Evento tra:</span>
+            <div class="countdown-timer">
+                <div class="time-unit">
+                    <span class="time-value" id="days">00</span>
+                    <span class="time-label">Giorni</span>
                 </div>
-                <div class="time-box-fixed">
-                    <div class="time-value-fixed" id="hours">00</div>
-                    <div class="time-label-fixed">Ore</div>
+                <div class="time-unit">
+                    <span class="time-value" id="hours">00</span>
+                    <span class="time-label">Ore</span>
                 </div>
-                <div class="time-box-fixed">
-                    <div class="time-value-fixed" id="minutes">00</div>
-                    <div class="time-label-fixed">Min</div>
+                <div class="time-unit">
+                    <span class="time-value" id="minutes">00</span>
+                    <span class="time-label">Minuti</span>
                 </div>
-                <div class="time-box-fixed">
-                    <div class="time-value-fixed" id="seconds">00</div>
-                    <div class="time-label-fixed">Sec</div>
+                <div class="time-unit">
+                    <span class="time-value" id="seconds">00</span>
+                    <span class="time-label">Secondi</span>
                 </div>
             </div>
-            <button class="countdown-close" onclick="closeCountdown()">&times;</button>
         </div>
+        <button class="countdown-close" id="closeCountdown">×</button>
     </div>
+
     <!-- Hero Section -->
     <section class="hero-contatti">
         <div class="hero-overlay"></div>
@@ -89,7 +90,8 @@
                     <div class="info-icon">📍</div>
                     <h3>Sede</h3>
                     <p>Vieni a trovarci presso il nostro ufficio</p>
-                    <a href="https://www.google.com/maps/place/Via+Roma+123,+Rimini+(RN)" class="info-link" target="_blank">Via Roma 123, Rimini (RN)</a>
+                    <a href="https://www.google.com/maps/place/Via+Roma+123,+Rimini+(RN)" class="info-link"
+                        target="_blank">Via Roma 123, Rimini (RN)</a>
                 </div>
 
                 <div class="info-card">
@@ -165,13 +167,9 @@
                 <div class="map-container">
                     <h2>Dove Siamo</h2>
                     <div class="map-wrapper">
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92789.38408244286!2d12.489213799999999!3d44.0678288!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132cb4345c8da867%3A0x409f9cbe259447cd!2sRimini%2C%20RN!5e0!3m2!1sit!2sit!4v1234567890123!5m2!1sit!2sit" 
-                            width="100%" 
-                            height="100%" 
-                            style="border:0;" 
-                            allowfullscreen="" 
-                            loading="lazy">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92789.38408244286!2d12.489213799999999!3d44.0678288!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132cb4345c8da867%3A0x409f9cbe259447cd!2sRimini%2C%20RN!5e0!3m2!1sit!2sit!4v1234567890123!5m2!1sit!2sit"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
                         </iframe>
                     </div>
                     <p class="map-info">📍 Via Roma 123, 47921 Rimini (RN)</p>

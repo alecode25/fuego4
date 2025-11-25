@@ -17,73 +17,91 @@ if (hamburger && navLinks) {
     });
 }// ==================== COUNTDOWN TIMER FISSO ====================
 
-const EVENTO_CONFIG = {
-    data: "2025-12-31T23:00:00",
-    nome: "Capodanno 2026"
-};
+// ==================== COUNTDOWN FISSO ====================
 
-function updateCountdown() {
-    const now = new Date().getTime();
-    const eventDate = new Date(EVENTO_CONFIG.data).getTime();
-    const distance = eventDate - now;
+// ==================== COUNTDOWN FISSO ====================
 
-    if (distance < 0) {
-        const bar = document.getElementById('countdownBar');
-        if (bar) {
-            bar.style.display = 'none';
-            bar.classList.remove('show');
-        }
-        return;
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
+document.addEventListener('DOMContentLoaded', function() {
+    const countdownBar = document.getElementById('countdownBar');
+    const closeBtn = document.getElementById('closeCountdown');
     const daysEl = document.getElementById('days');
     const hoursEl = document.getElementById('hours');
     const minutesEl = document.getElementById('minutes');
     const secondsEl = document.getElementById('seconds');
 
-    if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
-    if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
-    if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
-    if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
-}
+    console.log('Countdown bar:', countdownBar);
+    console.log('Close button:', closeBtn);
 
-function closeCountdown() {
-    const bar = document.getElementById('countdownBar');
-    if (bar) {
-        bar.classList.remove('show');
+    // Data target del prossimo evento
+    const targetDate = new Date('2025-12-31T23:59:59').getTime();
+
+    // Mostra il countdown
+    if (countdownBar) {
+        countdownBar.style.display = 'block';
         setTimeout(() => {
-            bar.style.display = 'none';
-        }, 300);
-        localStorage.setItem('countdownClosed', 'true');
-    }
-}
-
-function initCountdown() {
-    const bar = document.getElementById('countdownBar');
-    if (!bar) return;
-
-    // Controlla se l'utente ha già chiuso il countdown
-    if (localStorage.getItem('countdownClosed') === 'true') {
-        return; // Rimane nascosto
+            countdownBar.classList.add('show');
+        }, 500);
     }
 
-    // Mostra il countdown con fade in
-    bar.style.display = 'block';
-    setTimeout(() => {
-        bar.classList.add('show');
-    }, 50);
+    // Funzione per aggiornare il countdown
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+            if (countdownBar) {
+                countdownBar.style.display = 'none';
+            }
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
+        if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
+        if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
+        if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
+    }
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+    // Gestione chiusura
+    if (closeBtn) {
+        console.log('✅ Pulsante chiusura trovato!');
+        closeBtn.addEventListener('click', function(e) {
+            console.log('🔴 Click sul pulsante X');
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (countdownBar) {
+                countdownBar.classList.remove('show');
+                setTimeout(() => {
+                    countdownBar.style.display = 'none';
+                    console.log('✅ Countdown nascosto');
+                }, 300);
+            }
+        });
+    } else {
+        console.error('❌ Pulsante chiusura NON trovato!');
+    }
+});
+
+// Funzione globale alternativa
+window.closeCountdown = function() {
+    console.log('🔴 Funzione closeCountdown chiamata');
+    const countdownBar = document.getElementById('countdownBar');
+    if (countdownBar) {
+        countdownBar.classList.remove('show');
+        setTimeout(() => {
+            countdownBar.style.display = 'none';
+        }, 300);
+    }
 }
 
-// Avvia immediatamente
-initCountdown();
 
 // ==================== IL TUO CODICE ESISTENTE CONTINUA QUI ====================
 

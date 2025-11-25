@@ -188,31 +188,32 @@
             </div>
         </div>
     </section>
-    <!-- COUNTDOWN FISSO IN BASSO -->
+    c<!-- Countdown Bar -->
     <div class="countdown-fixed" id="countdownBar">
-        <div class="countdown-fixed-content">
-            <div class="countdown-fixed-title">🔥 Prossimo Evento</div>
-            <div class="countdown-fixed-timer">
-                <div class="time-box-fixed">
-                    <div class="time-value-fixed" id="days">00</div>
-                    <div class="time-label-fixed">Giorni</div>
-                </div>
-                <div class="time-box-fixed">
-                    <div class="time-value-fixed" id="hours">00</div>
-                    <div class="time-label-fixed">Ore</div>
-                </div>
-                <div class="time-box-fixed">
-                    <div class="time-value-fixed" id="minutes">00</div>
-                    <div class="time-label-fixed">Min</div>
-                </div>
-                <div class="time-box-fixed">
-                    <div class="time-value-fixed" id="seconds">00</div>
-                    <div class="time-label-fixed">Sec</div>
-                </div>
+    <div class="countdown-content">
+        <span class="countdown-text">Prossimo Evento tra:</span>
+        <div class="countdown-timer">
+            <div class="time-unit">
+                <span class="time-value" id="days">00</span>
+                <span class="time-label">Giorni</span>
             </div>
-            <button class="countdown-close" onclick="closeCountdown()">&times;</button>
+            <div class="time-unit">
+                <span class="time-value" id="hours">00</span>
+                <span class="time-label">Ore</span>
+            </div>
+            <div class="time-unit">
+                <span class="time-value" id="minutes">00</span>
+                <span class="time-label">Minuti</span>
+            </div>
+            <div class="time-unit">
+                <span class="time-value" id="seconds">00</span>
+                <span class="time-label">Secondi</span>
+            </div>
         </div>
     </div>
+    <button class="countdown-close" id="closeCountdown">×</button>
+</div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
