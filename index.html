@@ -10,6 +10,27 @@
 </head>
 
 <body>
+    <!-- POPUP CONFERMA NEWSLETTER -->
+<div class="newsletter-popup" id="newsletterPopup">
+    <div class="newsletter-popup-content">
+        <div class="popup-icon">🔥</div>
+        <h3>Iscrizione Completata!</h3>
+        <p>Grazie per esserti iscritto alla newsletter di Fuego.<br>
+        Riceverai presto aggiornamenti esclusivi sui prossimi eventi!</p>
+        <button class="popup-close-btn" onclick="closeNewsletterPopup()">Perfetto!</button>
+    </div>
+</div>
+
+<!-- POPUP ERRORE -->
+<div class="newsletter-popup error" id="errorPopup">
+    <div class="newsletter-popup-content">
+        <div class="popup-icon">❌</div>
+        <h3>Ops! Qualcosa è andato storto</h3>
+        <p id="errorMessage">Si è verificato un errore. Riprova più tardi.</p>
+        <button class="popup-close-btn" onclick="closeErrorPopup()">Chiudi</button>
+    </div>
+</div>
+
     <nav class="navbar">
         <div class="logo">
             <a href="index.html">
@@ -26,6 +47,8 @@
             <li><a href="#contest">Contest</a></li>
             <li><a href="chi_siamo.html">Chi Siamo</a></li>
             <li><a href="contattaci.html">Contatti</a></li>
+            <li><a href="#faq">Domande Frequenti</a></li>
+            <li><a href="#NewsletterForm">Iscriviti alla Newsletter</a></li>
         </ul>
     </nav>
 
@@ -189,6 +212,143 @@
             </div>
         </div>
     </section>
+    <!-- SEZIONE FAQ -->
+    <section class="faq-section" id="faq">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2>Domande Frequenti</h2>
+                <p>Tutto quello che devi sapere prima di partecipare ai nostri eventi</p>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Qual è l'età minima per partecipare?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>L'età minima varia in base all'evento. Controlla il badge sulla card dell'evento: alcuni sono
+                            "Over 16" e altri "Over 18". È necessario presentare un documento d'identità valido
+                            all'ingresso.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Come posso acquistare i biglietti?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Puoi acquistare i biglietti cliccando sul pulsante "Prenota Ora" presente in ogni evento.
+                            Sarai reindirizzato alla piattaforma di prevendita dove potrai completare l'acquisto in
+                            sicurezza.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Qual è il dress code?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Consigliamo un abbigliamento casual-elegante. Evita infradito, canottiere e abbigliamento
+                            troppo sportivo. Lo staff si riserva il diritto di negare l'ingresso in caso di outfit non
+                            appropriato.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Posso prenotare un tavolo?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sì! Per prenotazioni tavoli VIP o privé, contattaci tramite la pagina Contatti o inviaci un
+                            messaggio su Instagram @fuego_official_events. Ti forniremo tutte le informazioni su
+                            disponibilità e prezzi.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>A che ora aprono gli eventi?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Gli eventi solitamente aprono alle 23:00 e continuano fino alle 4:00-5:00 del mattino. Gli
+                            orari specifici sono indicati nella descrizione di ogni evento.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>È possibile ottenere un rimborso?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>I biglietti acquistati sono generalmente non rimborsabili. In caso di annullamento
+                            dell'evento da parte dell'organizzazione, riceverai un rimborso completo o un voucher per un
+                            evento futuro.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Dove si trovano i locali?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>I nostri eventi si svolgono nei migliori locali di Riccione e Rimini. L'indirizzo esatto è
+                            indicato nella descrizione di ogni evento. Consigliamo di arrivare in gruppo o utilizzare
+                            taxi/Uber per il ritorno.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Come posso iscrivermi alla Guest List?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Segui i nostri profili Instagram e TikTok per rimanere aggiornato sulle liste ospiti. Alcune
+                            serate offrono ingressi scontati o prioritari per chi si iscrive alla Guest List. Contattaci
+                            per maggiori informazioni.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- SEZIONE NEWSLETTER -->
+    <section class="newsletter-section" id ="NewsletterForm">
+        <div class="newsletter-container">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <h2>🔥 Non Perderti Nessun Evento</h2>
+                    <p>Iscriviti alla newsletter e ricevi aggiornamenti esclusivi sui prossimi eventi, offerte early
+                        bird e sconti riservati!</p>
+                </div>
+
+                <form id="newsletterForm" class="newsletter-form">
+                    <div class="newsletter-inputs">
+                        <input type="email" id="newsletter-email" name="email" placeholder="La tua email" required>
+
+                        <input type="tel" id="newsletter-phone" name="phone"
+                            placeholder="Numero WhatsApp (es: 3331234567)" required>
+                    </div>
+
+                    <div class="newsletter-privacy">
+                        <input type="checkbox" id="privacy" name="privacy" required>
+                        <label for="privacy">Accetto di ricevere comunicazioni promozionali via email e WhatsApp</label>
+                    </div>
+
+                    <button type="submit" class="newsletter-btn">Iscriviti Ora</button>
+                </form>
+
+                <p class="newsletter-disclaimer">✨ Niente spam, solo eventi e offerte esclusive!</p>
+            </div>
+        </div>
+    </section>
+
 
     <footer class="footer">
         <div class="footer-content">

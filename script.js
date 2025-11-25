@@ -101,18 +101,18 @@ function closeCountdown() {
 function initCountdown() {
     const bar = document.getElementById('countdownBar');
     if (!bar) return;
-    
+
     // Controlla se l'utente ha già chiuso il countdown
     if (localStorage.getItem('countdownClosed') === 'true') {
         return; // Rimane nascosto
     }
-    
+
     // Mostra il countdown con fade in
     bar.style.display = 'block';
     setTimeout(() => {
         bar.classList.add('show');
     }, 50);
-    
+
     updateCountdown();
     setInterval(updateCountdown, 1000);
 }
@@ -468,3 +468,164 @@ if (carousel && cards.length > 0) {
         }, 250);
     }, { passive: true });
 }
+// ==================== FAQ ACCORDION ====================
+
+const faqItems = document.querySelectorAll('.faq-item');
+
+faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+
+    question.addEventListener('click', () => {
+        // Chiudi tutti gli altri item
+        faqItems.forEach(otherItem => {
+            if (otherItem !== item) {
+                otherItem.classList.remove('active');
+            }
+        });
+
+        // Toggle dell'item corrente
+        item.classList.toggle('active');
+    });
+});
+// ==================== FUNZIONI DI VALIDAZIONE ====================
+
+function validateEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+}
+
+function validatePhone(phone) {
+    const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
+    const phoneRegex = /^[0-9]{9,15}$/;
+    return phoneRegex.test(cleanPhone);
+}
+
+// ==================== NEWSLETTER FORM ====================
+
+document.addEventListener('DOMContentLoaded', function () {
+    const newsletterForm = document.getElementById('newsletterForm');
+
+    if (newsletterForm) {
+        console.log('✅ Newsletter form trovato!');
+
+        newsletterForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            console.log('📩 Form newsletter inviato!');
+
+            const email = document.getElementById('newsletter-email').value.trim();
+            const phone = document.getElementById('newsletter-phone').value.trim();
+            const privacy = document.getElementById('privacy').checked;
+
+            // Validazione
+            if (!validateEmail(email)) {
+                showErrorPopup('Inserisci un indirizzo email valido');
+                return false;
+            }
+
+            if (!validatePhone(phone)) {
+                showErrorPopup('Inserisci un numero WhatsApp valido (9-15 cifre)');
+                return false;
+            }
+
+            if (!privacy) {
+                showErrorPopup('Devi accettare di ricevere comunicazioni');
+                return false;
+            }
+
+            // Invia a Google Sheets
+            sendNewsletterToGoogleSheets(email, phone);
+
+            return false;
+        });
+    }
+});
+
+function sendNewsletterToGoogleSheets(email, phone) {
+    const btn = document.querySelector('.newsletter-btn');
+    const originalText = btn.textContent;
+
+    btn.textContent = 'Iscrizione in corso...';
+    btn.disabled = true;
+
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwLsqIZUl223ngalemsOvTwENHdn6nG50qZFyj9jnrqPSQkNOdv09MpBfua67dJQb8F/exec';
+
+    const formData = {
+        email: email,
+        telefono: phone
+    };
+
+    console.log('📤 Invio dati a:', scriptURL);
+    console.log('📦 Dati:', formData);
+
+    fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify(formData)
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('✅ Dati risposta:', data);
+            if (data.result === 'success') {
+                showNewsletterPopup();
+                document.getElementById('newsletterForm').reset();
+            } else {
+                throw new Error(data.error || 'Errore sconosciuto');
+            }
+        })
+        .catch(error => {
+            console.error('❌ Errore:', error);
+            showErrorPopup('Si è verificato un errore. Riprova più tardi.');
+        })
+        .finally(() => {
+            btn.textContent = originalText;
+            btn.disabled = false;
+        });
+}
+
+// ==================== POPUP FUNCTIONS ====================
+
+function showNewsletterPopup() {
+    const popup = document.getElementById('newsletterPopup');
+    if (popup) {
+        popup.classList.add('show');
+    }
+}
+
+function closeNewsletterPopup() {
+    const popup = document.getElementById('newsletterPopup');
+    if (popup) {
+        popup.classList.remove('show');
+    }
+}
+
+function showErrorPopup(message) {
+    const popup = document.getElementById('errorPopup');
+    const errorMessage = document.getElementById('errorMessage');
+    if (popup && errorMessage) {
+        errorMessage.textContent = message || 'Si è verificato un errore. Riprova più tardi.';
+        popup.classList.add('show');
+    }
+}
+
+function closeErrorPopup() {
+    const popup = document.getElementById('errorPopup');
+    if (popup) {
+        popup.classList.remove('show');
+    }
+}
+
+// Chiudi popup cliccando fuori (solo se esiste)
+window.addEventListener('click', function (e) {
+    const successPopup = document.getElementById('newsletterPopup');
+    const errorPopup = document.getElementById('errorPopup');
+
+    if (successPopup && e.target === successPopup) {
+        closeNewsletterPopup();
+    }
+    if (errorPopup && e.target === errorPopup) {
+        closeErrorPopup();
+    }
+});
+
+
