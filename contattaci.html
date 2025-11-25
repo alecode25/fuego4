@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/icona.png" type="image/x-icon">
     <title>Contatti - Fuego Events</title>
     <link rel="stylesheet" href="contattaci.css">
 </head>
@@ -29,7 +30,31 @@
             
         </ul>
     </nav>
-
+<!-- COUNTDOWN FISSO IN BASSO -->
+    <div class="countdown-fixed" id="countdownBar">
+        <div class="countdown-fixed-content">
+            <div class="countdown-fixed-title">🔥 Prossimo Evento</div>
+            <div class="countdown-fixed-timer">
+                <div class="time-box-fixed">
+                    <div class="time-value-fixed" id="days">00</div>
+                    <div class="time-label-fixed">Giorni</div>
+                </div>
+                <div class="time-box-fixed">
+                    <div class="time-value-fixed" id="hours">00</div>
+                    <div class="time-label-fixed">Ore</div>
+                </div>
+                <div class="time-box-fixed">
+                    <div class="time-value-fixed" id="minutes">00</div>
+                    <div class="time-label-fixed">Min</div>
+                </div>
+                <div class="time-box-fixed">
+                    <div class="time-value-fixed" id="seconds">00</div>
+                    <div class="time-label-fixed">Sec</div>
+                </div>
+            </div>
+            <button class="countdown-close" onclick="closeCountdown()">&times;</button>
+        </div>
+    </div>
     <!-- Hero Section -->
     <section class="hero-contatti">
         <div class="hero-overlay"></div>

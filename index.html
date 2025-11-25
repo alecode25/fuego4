@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fuego</title>
+    <link rel="icon" href="assets/icona.png" type="image/x-icon">
+    <title>Fuego Events</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -33,12 +34,40 @@
         <div class="content">
             <h1 class="welcome-text">Benvenuto in Fuego</h1>
             <p class="subtitle">Prenota subito per il prossimo evento</p>
+
+
+
+
             <a href="https://www.ticketsms.it/" class="cta-button">
                 <span>Prenota Ora</span>
             </a>
         </div>
     </div>
-
+    <!-- COUNTDOWN FISSO IN BASSO -->
+    <div class="countdown-fixed" id="countdownBar">
+        <div class="countdown-fixed-content">
+            <div class="countdown-fixed-title">🔥 Prossimo Evento</div>
+            <div class="countdown-fixed-timer">
+                <div class="time-box-fixed">
+                    <div class="time-value-fixed" id="days">00</div>
+                    <div class="time-label-fixed">Giorni</div>
+                </div>
+                <div class="time-box-fixed">
+                    <div class="time-value-fixed" id="hours">00</div>
+                    <div class="time-label-fixed">Ore</div>
+                </div>
+                <div class="time-box-fixed">
+                    <div class="time-value-fixed" id="minutes">00</div>
+                    <div class="time-label-fixed">Min</div>
+                </div>
+                <div class="time-box-fixed">
+                    <div class="time-value-fixed" id="seconds">00</div>
+                    <div class="time-label-fixed">Sec</div>
+                </div>
+            </div>
+            <button class="countdown-close" onclick="closeCountdown()">&times;</button>
+        </div>
+    </div>
     <section class="video-section">
         <div class="video-text">
             <h2>Vivi l'Esperienza Fuego</h2>
@@ -51,7 +80,7 @@
         </video>
     </section>
 
-    <section class="eventi-section" id="eventi">
+    <section class="eventi-section">
         <div class="eventi-header">
             <h2>Prossimi Eventi</h2>
             <p>Non perderti le serate più calde della riviera</p>
@@ -62,7 +91,7 @@
                 <span>‹</span>
             </button>
 
-            <div class="eventi-carousel">
+            <div class="eventi-carousel" id="eventi">
                 <div class="evento-card">
                     <div class="evento-image">
                         <img src="assets/prov.jpg" alt="Evento 1" loading="lazy">
@@ -130,7 +159,7 @@
 
     <section class="contest-section" id="contest">
         <div class="contest-header">
-            <h2>Contest in Corso</h2>
+            <h2>Contest</h2>
             <p>Partecipa ai nostri contest e vinci biglietti gratuiti e premi esclusivi</p>
         </div>
 

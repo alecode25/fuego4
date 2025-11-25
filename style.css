@@ -34,6 +34,204 @@ body {
     scrollbar-width: none;
 }
 
+/* ==================== COUNTDOWN FISSO IN BASSO ==================== */
+
+/* ==================== COUNTDOWN FISSO IN BASSO ==================== */
+
+.countdown-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: none; /* Nascosto di default - JavaScript lo mostrerà se necessario */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.countdown-fixed.show {
+    display: block;
+    opacity: 1;
+}
+.countdown-fixed.hidden {
+    display: none !important;
+}
+
+.countdown-fixed-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    position: relative;
+}
+
+.countdown-fixed-title {
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    white-space: nowrap;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.countdown-fixed-timer {
+    display: flex;
+    gap: 12px;
+    flex: 1;
+    justify-content: center;
+}
+
+.time-box-fixed {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 8px;
+    padding: 10px 15px;
+    min-width: 70px;
+    text-align: center;
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    transition: all 0.3s ease;
+}
+
+.time-box-fixed:hover {
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.time-value-fixed {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.time-label-fixed {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.95);
+    margin-top: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.countdown-close {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.15);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    color: white;
+    font-size: 28px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    line-height: 1;
+    padding: 0;
+}
+
+.countdown-close:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-50%) rotate(90deg);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Responsive Tablet */
+@media (max-width: 768px) {
+    .countdown-fixed-content {
+        padding: 12px 15px;
+        gap: 15px;
+    }
+
+    .countdown-fixed-title {
+        font-size: 14px;
+    }
+
+    .countdown-fixed-timer {
+        gap: 8px;
+    }
+
+    .time-box-fixed {
+        min-width: 60px;
+        padding: 8px 12px;
+    }
+
+    .time-value-fixed {
+        font-size: 24px;
+    }
+
+    .time-label-fixed {
+        font-size: 9px;
+    }
+
+    .countdown-close {
+        width: 30px;
+        height: 30px;
+        font-size: 24px;
+    }
+}
+
+/* Responsive Mobile */
+@media (max-width: 480px) {
+    .countdown-fixed-content {
+        flex-direction: column;
+        padding: 10px 40px 10px 15px;
+        gap: 10px;
+    }
+
+    .countdown-fixed-title {
+        font-size: 13px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .countdown-fixed-timer {
+        gap: 6px;
+        width: 100%;
+    }
+
+    .time-box-fixed {
+        min-width: 55px;
+        padding: 6px 8px;
+    }
+
+    .time-value-fixed {
+        font-size: 22px;
+    }
+
+    .time-label-fixed {
+        font-size: 8px;
+        margin-top: 3px;
+    }
+
+    .countdown-close {
+        top: 10px;
+        right: 10px;
+        transform: none;
+    }
+
+    .countdown-close:hover {
+        transform: rotate(90deg);
+    }
+}
+
+
 .container {
     position: relative;
     width: 100%;

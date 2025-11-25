@@ -45,6 +45,89 @@ window.addEventListener('scroll', () => {
     lastScroll = currentScroll;
 }, { passive: true });
 
+
+// ==================== COUNTDOWN TIMER FISSO ====================
+
+// ==================== COUNTDOWN TIMER FISSO ====================
+
+// ==================== COUNTDOWN TIMER FISSO ====================
+
+const EVENTO_CONFIG = {
+    data: "2025-12-31T23:00:00",
+    nome: "Capodanno 2026"
+};
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const eventDate = new Date(EVENTO_CONFIG.data).getTime();
+    const distance = eventDate - now;
+
+    if (distance < 0) {
+        const bar = document.getElementById('countdownBar');
+        if (bar) {
+            bar.style.display = 'none';
+            bar.classList.remove('show');
+        }
+        return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+
+    if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+    if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+    if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+    if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+}
+
+function closeCountdown() {
+    const bar = document.getElementById('countdownBar');
+    if (bar) {
+        bar.classList.remove('show');
+        setTimeout(() => {
+            bar.style.display = 'none';
+        }, 300);
+        localStorage.setItem('countdownClosed', 'true');
+    }
+}
+
+function initCountdown() {
+    const bar = document.getElementById('countdownBar');
+    if (!bar) return;
+    
+    // Controlla se l'utente ha già chiuso il countdown
+    if (localStorage.getItem('countdownClosed') === 'true') {
+        return; // Rimane nascosto
+    }
+    
+    // Mostra il countdown con fade in
+    bar.style.display = 'block';
+    setTimeout(() => {
+        bar.classList.add('show');
+    }, 50);
+    
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+}
+
+// Avvia immediatamente
+initCountdown();
+
+// ==================== IL TUO CODICE ESISTENTE CONTINUA QUI ====================
+
+
+
+
+
+
+
 // Auto-play video CON AUDIO quando entra in viewport
 const observerOptions = {
     threshold: 0.3
@@ -56,7 +139,7 @@ const videoObserver = new IntersectionObserver((entries) => {
             // Prova prima CON audio
             video.muted = false;
             const playPromise = video.play();
-            
+
             if (playPromise !== undefined) {
                 playPromise.then(() => {
                     console.log('✅ Video avviato con audio!');
@@ -127,7 +210,7 @@ if (carousel && cards.length > 0) {
     function createDots() {
         dotsContainer.innerHTML = '';
         totalPages = window.innerWidth <= 768 ? cards.length : Math.ceil(cards.length / 2);
-        
+
         for (let i = 0; i < totalPages; i++) {
             const dot = document.createElement('div');
             dot.classList.add('dot');
@@ -153,18 +236,18 @@ if (carousel && cards.length > 0) {
     function goToPage(pageIndex, smooth = true) {
         if (pageIndex < 0 || pageIndex >= totalPages) return;
         if (isScrolling && smooth) return;
-        
+
         isScrolling = true;
         currentIndex = pageIndex;
-        
+
         if (window.innerWidth <= 768) {
             const targetCard = cards[currentIndex];
             const containerWidth = carousel.offsetWidth;
             const cardWidth = targetCard.offsetWidth;
             const cardLeft = targetCard.offsetLeft;
-            
+
             const scrollPosition = cardLeft - (containerWidth / 2) + (cardWidth / 2);
-            
+
             if (smooth) {
                 carousel.scrollTo({
                     left: Math.max(0, scrollPosition),
@@ -181,25 +264,25 @@ if (carousel && cards.length > 0) {
             const cardWidth = cards[0].offsetWidth;
             const gap = 20;
             const scrollAmount = (cardWidth + gap) * 2 * currentIndex;
-            
+
             carousel.scrollTo({
                 left: scrollAmount,
                 behavior: smooth ? 'smooth' : 'instant'
             });
         }
-        
+
         setTimeout(() => {
             isScrolling = false;
             updateDots();
         }, smooth ? 500 : 0);
-        
+
         resetAutoScroll();
     }
 
     // Prossima card - CON LOOP
     function nextPage() {
         const maxIndex = window.innerWidth <= 768 ? cards.length - 1 : Math.ceil(cards.length / 2) - 1;
-        
+
         if (currentIndex >= maxIndex) {
             // Ultima card → torna alla prima SENZA animazione
             currentIndex = 0;
@@ -213,7 +296,7 @@ if (carousel && cards.length > 0) {
     // Card precedente - CON LOOP
     function prevPage() {
         const maxIndex = window.innerWidth <= 768 ? cards.length - 1 : Math.ceil(cards.length / 2) - 1;
-        
+
         if (currentIndex <= 0) {
             // Prima card → vai all'ultima SENZA animazione
             currentIndex = maxIndex;
@@ -227,7 +310,7 @@ if (carousel && cards.length > 0) {
     // Auto-scroll
     function startAutoScroll() {
         if (userInteracting) return;
-        
+
         clearInterval(autoScrollInterval);
         autoScrollInterval = setInterval(() => {
             if (!userInteracting) {
@@ -274,7 +357,7 @@ if (carousel && cards.length > 0) {
             endUserInteraction();
         });
     }
-    
+
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
             startUserInteraction();
@@ -295,20 +378,20 @@ if (carousel && cards.length > 0) {
                 const containerCenter = carousel.scrollLeft + (carousel.offsetWidth / 2);
                 const scrollLeft = carousel.scrollLeft;
                 const maxScroll = carousel.scrollWidth - carousel.offsetWidth;
-                
+
                 let closestIndex = 0;
                 let minDistance = Infinity;
-                
+
                 cards.forEach((card, index) => {
                     const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
                     const distance = Math.abs(containerCenter - cardCenter);
-                    
+
                     if (distance < minDistance) {
                         minDistance = distance;
                         closestIndex = index;
                     }
                 });
-                
+
                 // Se sei all'ultima card e swipe verso destra → vai alla prima
                 if (scrollLeft >= maxScroll - 10 && closestIndex === cards.length - 1) {
                     currentIndex = 0;
@@ -331,30 +414,30 @@ if (carousel && cards.length > 0) {
     // Scroll manuale
     carousel.addEventListener('scroll', () => {
         startUserInteraction();
-        
+
         clearTimeout(scrollEndTimer);
         scrollEndTimer = setTimeout(() => {
             if (window.innerWidth <= 768) {
                 const containerCenter = carousel.scrollLeft + (carousel.offsetWidth / 2);
                 let closestIndex = 0;
                 let minDistance = Infinity;
-                
+
                 cards.forEach((card, index) => {
                     const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
                     const distance = Math.abs(containerCenter - cardCenter);
-                    
+
                     if (distance < minDistance) {
                         minDistance = distance;
                         closestIndex = index;
                     }
                 });
-                
+
                 if (closestIndex !== currentIndex) {
                     currentIndex = closestIndex;
                     updateDots();
                 }
             }
-            
+
             endUserInteraction();
         }, 150);
     }, { passive: true });
@@ -371,14 +454,14 @@ if (carousel && cards.length > 0) {
         resizeTimer = setTimeout(() => {
             stopAutoScroll();
             const newCardsPerView = getCardsPerView();
-            
+
             if (newCardsPerView !== cardsPerView) {
                 cardsPerView = newCardsPerView;
                 createDots();
                 currentIndex = 0;
                 goToPage(0, false);
             }
-            
+
             if (!userInteracting) {
                 startAutoScroll();
             }

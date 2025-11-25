@@ -16,6 +16,80 @@ if (hamburger && navLinks) {
     });
 }
 
+// ==================== COUNTDOWN TIMER FISSO ====================
+// ==================== COUNTDOWN TIMER FISSO ====================
+
+const EVENTO_CONFIG = {
+    data: "2025-12-31T23:00:00",
+    nome: "Capodanno 2026"
+};
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const eventDate = new Date(EVENTO_CONFIG.data).getTime();
+    const distance = eventDate - now;
+
+    if (distance < 0) {
+        const bar = document.getElementById('countdownBar');
+        if (bar) {
+            bar.style.display = 'none';
+            bar.classList.remove('show');
+        }
+        return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+
+    if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+    if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+    if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+    if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+}
+
+function closeCountdown() {
+    const bar = document.getElementById('countdownBar');
+    if (bar) {
+        bar.classList.remove('show');
+        setTimeout(() => {
+            bar.style.display = 'none';
+        }, 300);
+        localStorage.setItem('countdownClosed', 'true');
+    }
+}
+
+function initCountdown() {
+    const bar = document.getElementById('countdownBar');
+    if (!bar) return;
+    
+    // Controlla se l'utente ha già chiuso il countdown
+    if (localStorage.getItem('countdownClosed') === 'true') {
+        return; // Rimane nascosto
+    }
+    
+    // Mostra il countdown con fade in
+    bar.style.display = 'block';
+    setTimeout(() => {
+        bar.classList.add('show');
+    }, 50);
+    
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+}
+
+// Avvia immediatamente
+initCountdown();
+
+// ==================== IL TUO CODICE ESISTENTE CONTINUA QUI ====================
+
+
 // ========================================
 // CONFIGURAZIONE GOOGLE SHEETS
 // ========================================
